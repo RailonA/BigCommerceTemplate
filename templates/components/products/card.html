@@ -59,23 +59,38 @@
                 {{/if}}
             {{/or}}
         {{/if}}
-
         <a href="{{url}}"
-           class="card-figure__link"
-           aria-label="{{> components/products/product-info}}"
-           {{#if settings.data_tag_enabled}} data-event-type="product-click" {{/if}}
+            class="card-figure__link"
+            aria-label="{{> components/products/product-info}}"
+            {{#if settings.data_tag_enabled}} data-event-type="product-click" {{/if}}
         >
             <div class="card-img-container">
-                {{> components/common/responsive-img
-                    image=image
-                    class="card-image"
-                    fallback_size=theme_settings.productgallery_size
-                    lazyload=theme_settings.lazyload_mode
-                    default_image=theme_settings.default_image_product
-                }}
+                <a
+                  class="lazy-image replaced-image main {{image_ratio}} {{image_size}}"
+                  href="{{url}}"
+                  data-src="{{getImage img size (cdn default)}}">
+                    <img class="card-image lazyload" onmouseover="this.src='{{getImage images.[1] img size (cdn default)}}'" onmouseout="this.src='{{getImage image 'productgallery_size' (cdn default)}}'" data-sizes="auto" src="{{cdn 'img/loading.svg'}}" data-src="{{getImage image 'productgallery_size' (cdn theme_settings.default_image_product)}}" alt="{{image.alt}}" title="{{image.alt}}">
+                    <div class="spinner"></div>
+                </a>
+                {{#if product.images.[1]}}
+                  <a
+                  class="lazy-image replaced-image second {{image_ratio}} {{image_size}}"
+                  href="{{url}}"
+                  data-src="{{getImage product.images.[1] img size (cdn default)}}">
+                      <img class="card-image lazyload" onmouseover="this.src='{{getImage images.[1] img size (cdn default)}}'" onmouseout="this.src='{{getImage image 'productgallery_size' (cdn default)}}'" data-sizes="auto" src="{{cdn 'img/loading.svg'}}" data-src="{{getImage image 'productgallery_size' (cdn theme_settings.default_image_product)}}" alt="{{image.alt}}" title="{{image.alt}}">
+                      <div class="spinner"></div>
+                  </a>
+                {{else}}
+                  <a
+                    class="lazy-image replaced-image second {{image_ratio}} {{image_size}}"
+                    href="{{url}}"
+                    data-src="{{getImage img size (cdn default)}}">
+                      <img class="card-image lazyload" onmouseover="this.src='{{getImage images.[1] img size (cdn default)}}'" onmouseout="this.src='{{getImage image 'productgallery_size' (cdn default)}}'" data-sizes="auto" src="{{cdn 'img/loading.svg'}}" data-src="{{getImage image 'productgallery_size' (cdn theme_settings.default_image_product)}}" alt="{{image.alt}}" title="{{image.alt}}">
+                      <div class="spinner"></div>
+                  </a>
+                {{/if}}
             </div>
         </a>
-
         <figcaption class="card-figcaption">
             <div class="card-figcaption-body">
                 {{#unless hide_product_quick_view}}
